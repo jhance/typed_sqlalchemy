@@ -1,0 +1,12 @@
+This is meant to be a demonstration of how to do some fairly complicated
+type semantics using mypy.
+
+Interface is not stable.
+
+Some notes:
+
+- ctx.api.generic_named_type() seemed useless outside of builtins because theres
+no way to guarantee that the type you want has been sufficiently processed or
+is imported by the module. To get around this, when I want to for example
+change a PlaceholderT for T, I inject types I need into the generic values
+for PlaceholderT.
