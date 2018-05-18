@@ -10,24 +10,19 @@ class QueryPlugin(Plugin):
         #    return filter_typed_col_hook
         return None
 
+
 def filter_typed_col_hook(ctx: MethodContext):
     assert isinstance(ctx.type, Instance)
     # Disgusting hack (don't know how to get FilterClause directly)
-    print('foo')
-    print(ctx.type.type)
     for base in ctx.type.type.bases:
-        print(base.type)
-        print(base.args)
     return ctx.type.type.bases[0].args[0]
+
 
 def session_hook(ctx: MethodContext) -> Type:
     if not isinstance(ctx.default_return_type, Instance):
-        print('default ret type not instance')
         return ctx.default_return_type
 
     if ctx.default_return_type.type.fullname() != 'typed_sqlalchemy.session.QueryPlaceholder':
-        print('default ret type not placheolder')
-        print(ctx.default_return_type.type.fullname())
         return ctx.default_return_type
 
     assert isinstance(ctx.type, Instance)
