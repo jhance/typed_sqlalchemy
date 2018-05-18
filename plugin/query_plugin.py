@@ -6,16 +6,7 @@ class QueryPlugin(Plugin):
     def get_method_hook(self, fullname):
         if fullname == 'typed_sqlalchemy.session.Session.query':
             return session_hook
-        #if fullname == 'typed_sqlalchemy.declarative.TypedColumn.__eq__':
-        #    return filter_typed_col_hook
         return None
-
-
-def filter_typed_col_hook(ctx: MethodContext):
-    assert isinstance(ctx.type, Instance)
-    # Disgusting hack (don't know how to get FilterClause directly)
-    for base in ctx.type.type.bases:
-    return ctx.type.type.bases[0].args[0]
 
 
 def session_hook(ctx: MethodContext) -> Type:
